@@ -1,13 +1,21 @@
 package sample;
 
 import com.google.common.net.PercentEscaper;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClients;
+import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import scraper.Book;
 import org.apache.commons.io.FileUtils;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.swing.text.html.Option;
 import java.io.*;
 import java.net.*;
+import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -24,10 +32,18 @@ public class Main {
 
 
     public Main() throws Exception{
+
+        long time = System.currentTimeMillis();
+
         System.setProperty("webdriver.gecko.driver","C:/Program Files/geckodriver.exe");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("marionette",true);
-        WebDriver driver= new FirefoxDriver(); driver.get("https://www.systembolaget.se/sok/?categoryLevel1=%C3%96l");
+        FirefoxBinary firefoxBinary = new FirefoxBinary();
+        FirefoxOptions options = new FirefoxOptions();
+        options.setBinary(firefoxBinary);
+        //options.setHeadless(true);  // <-- headless set here
+        WebDriver driver = new FirefoxDriver(options);
+        driver.get("https://www.systembolaget.se/sok/?categoryLevel1=%C3%96l");
         driver.findElement(By.xpath("/html/body/div[4]/div/div/div/div/section/div/div/div[4]/button")).click();
         driver.findElement(By.xpath("/html/body/div[4]/div/div/div/div/div/div[2]/div[2]/button[2]")).click();
         driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[1]/div/button[2]")).click();
@@ -36,7 +52,46 @@ public class Main {
         driver.findElement(By.xpath("/html/body/div[5]/div/div/div/div/div/form/label/div/input")).sendKeys("p");
         TimeUnit.MILLISECONDS.sleep(800);
         driver.findElement(By.xpath("/html/body/div[5]/div/div/div/div/div/form/label/div/div/div/ul/li/div")).click();
+        /*
+        TimeUnit.MILLISECONDS.sleep(500);
+        String volume = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[1]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[1]")).getText();
+        System.out.println(volume);*/
 
+        List<Beer> beers = new ArrayList<>();
+
+        TimeUnit.MILLISECONDS.sleep(500);
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[1]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[1]")).click();
+        beers.add(new Beer(driver));
+        driver.navigate().back();
+        //TimeUnit.MILLISECONDS.sleep(500);
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[2]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span")).click();
+        beers.add(new Beer(driver));
+        driver.navigate().back();
+        //TimeUnit.MILLISECONDS.sleep(500);
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[3]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[2]")).click();
+        beers.add(new Beer(driver));
+        driver.navigate().back();
+        //TimeUnit.MILLISECONDS.sleep(500);
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[4]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[2]")).click();
+        beers.add(new Beer(driver));
+        driver.navigate().back();
+        //TimeUnit.MILLISECONDS.sleep(500);
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[5]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[2]")).click();
+        beers.add(new Beer(driver));
+        driver.navigate().back();
+        //TimeUnit.MILLISECONDS.sleep(500);
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[6]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[2]")).click();
+        beers.add(new Beer(driver));
+        driver.navigate().back();
+        //TimeUnit.MILLISECONDS.sleep(500);
+
+        for (Beer b : beers) {
+            System.out.println(b.toString());
+        }
+
+        System.out.println(System.currentTimeMillis() - time);
+
+        /*
         int antalSidor = 4;
         for(int i = 0; i < antalSidor; i++){
             TimeUnit.MILLISECONDS.sleep(1000);
@@ -69,14 +124,37 @@ public class Main {
     public class Beer {
         final private String name;
         final private int volume;
-        final private int price;
+        final private double price;
         final private double apk;
+        final private double percent;
 
-        public Beer(String name, int volume, int price) {
+        public Beer(String name, int volume, int price, double percent) {
             this.name = name;
             this.volume = volume;
             this.price = price;
+            this.percent = percent;
             this.apk = price;
+        }
+
+        public Beer(WebDriver driver){
+            this.name = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/main/div[1]/div/div[2]/div[2]/div[1]/div[1]/div[2]/h1/span")).getText();
+            String temp = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/main/div[1]/div/div[2]/div[2]/div[3]/div[1]/div/div[2]/span")).getText();
+            this.volume = Integer.parseInt(temp.split(" ")[0]);
+            this.price = Double.parseDouble(driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/main/div[1]/div/div[2]/div[2]/div[3]/div[2]/div[1]")).getText().replace(":", "."));
+            temp = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/main/div[1]/div/div[2]/div[2]/div[3]/div[1]/div/div[3]/span")).getText();
+            this.percent = Double.parseDouble(temp.split(" ")[0].replace(",", "."));
+            this.apk = (this.percent * 0.01 * this.volume) / this.price;
+        }
+
+        @Override
+        public String toString() {
+            return "Beer{" +
+                    "name='" + name + '\'' +
+                    ", volume=" + volume +
+                    ", price=" + price +
+                    ", apk=" + apk +
+                    ", percent=" + percent +
+                    '}';
         }
 
         public String getName() {
@@ -87,7 +165,7 @@ public class Main {
             return volume;
         }
 
-        public int getPrice() {
+        public double getPrice() {
             return price;
         }
 
