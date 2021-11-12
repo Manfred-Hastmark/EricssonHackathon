@@ -1,22 +1,39 @@
 <html>
 	<head>
-<<<<<<< HEAD
-        <script src="js/scraping.js"></script>
-        <script src="js/main.js"></script> 
-=======
 		<script src="js/main.js"></script> 
 		<link rel="stylesheet" href="styles.css">
->>>>>>> 39654781c61c78b7095ceb7571a9a28795dca927
 	</head>
 	<body>
+		<div id="searchDiv"  style="display:block;">
+		<h1>Sök´efter litteratur</h1>
+			<form>
+				<label for="query">Sök bok: </label><br>
+				<input type="text" id="query" name="query">
+			</form>
+			<input type="submit"  onclick="showInput();" value="Sök">
+			<p id="display"></p>
+		</div>
 	
-		<form>
-			<label for="query">Sök bok: </label><br>
-			<input type="text" id="query" name="query">
-		</form>
-		<input type="submit"  onclick="showInput();">
-		<p id="display"></p>
-	
+
+
+
+		<div id="formDiv"  style="display:none;">
+		<h1>Lägg upp din bok</h1>
+			<form id="adForm">
+				<label for="name">Ditt namn</label><br>
+				<input type="text" id="name" name="name">
+				<br>
+				
+				<label for="bok">Boknamn</label><br>
+				<input type="text" id="bok" name="bok">
+				<br>
+				
+				<label for="phone">Enter your phone number:</label><br>
+				<input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+				<br>
+			</form>
+		</div>
+		<button type="button" onclick="newBook();">Ny Annons</button>
 	
 	</body>
 	
