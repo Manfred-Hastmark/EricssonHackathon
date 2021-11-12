@@ -1,9 +1,17 @@
 <html>
 	<head>
-		<script src="js/main.js"></script> 
+		<script src="bundle.js"></script>
+		<script>
+		var through = require('through');
+		var duplexer = require('duplexer');
+		var myModule = require('my-module');
+		</script>
+		<script type="module" src="js/main.js"></script> 
 		<link rel="stylesheet" href="styles.css">
 	</head>
 	<body>
+
+
 		<div id="searchDiv"  style="display:block;">
 		<h1>Sök´efter litteratur</h1>
 			<form>
