@@ -32,11 +32,5 @@ public class Main {
         return Double.parseDouble(result.toString().replace(",", "."));
     }
 
-    public class Book{
-        final private String link;
-        final private int price;
-        final private String author;
 
-
-    }
 }
