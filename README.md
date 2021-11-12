@@ -1,0 +1,2 @@
+# EricssonHackathon
+Hackathon Ericsson
