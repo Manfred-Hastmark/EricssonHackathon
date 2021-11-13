@@ -49,76 +49,11 @@ public class Main {
         this.beers = new ArrayList<>();
         getToTheBeers();
         getBeers();
+        driver.close();
         sort(beers, 0, beers.size()-1);
         beers.forEach(b -> System.out.println(b.toString()));
         System.out.println(beers.size());
 
-        /*
-        TimeUnit.MILLISECONDS.sleep(500);
-        String volume = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[1]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[1]")).getText();
-        System.out.println(volume);*/
-        /*
-        TimeUnit.MILLISECONDS.sleep(500);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[1]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[1]")).click();
-        beers.add(new Beer(driver));
-        driver.navigate().back();
-        //TimeUnit.MILLISECONDS.sleep(500);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[2]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span")).click();
-        beers.add(new Beer(driver));
-        driver.navigate().back();
-        //TimeUnit.MILLISECONDS.sleep(500);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[3]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[2]")).click();
-        beers.add(new Beer(driver));
-        driver.navigate().back();
-        //TimeUnit.MILLISECONDS.sleep(500);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[4]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[2]")).click();
-        beers.add(new Beer(driver));
-        driver.navigate().back();
-        //TimeUnit.MILLISECONDS.sleep(500);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[5]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[2]")).click();
-        beers.add(new Beer(driver));
-        driver.navigate().back();
-        //TimeUnit.MILLISECONDS.sleep(500);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[6]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[2]")).click();
-        beers.add(new Beer(driver));
-        driver.navigate().back();
-        //TimeUnit.MILLISECONDS.sleep(500);
-
-        for (Beer b : beers) {
-            System.out.println(b.toString());
-        }
-
-        beers.forEach(b -> System.out.println(b.toString()));
-
-        System.out.println(System.currentTimeMillis() - time);
-        */
-        /*
-        int antalSidor = 4;
-        for(int i = 0; i < antalSidor; i++){
-            TimeUnit.MILLISECONDS.sleep(1000);
-            driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[" + (32 + i*31) + "]/div[1]/button")).click();
-        }
-        TimeUnit.MILLISECONDS.sleep(1000);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[155]/div[1]/button")).click();
-        TimeUnit.MILLISECONDS.sleep(1000);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[185]/div[1]/button")).click();
-        TimeUnit.MILLISECONDS.sleep(1000);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[215]/div[1]/button")).click();
-        TimeUnit.MILLISECONDS.sleep(1000);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[245]/div[1]/button")).click();
-        TimeUnit.MILLISECONDS.sleep(1000);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[275]/div[1]/button")).click();
-        /*
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[32]/div[1]/button")).click();
-        TimeUnit.SECONDS.sleep(1);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[63]/div[1]/button")).click();
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[94]/div[1]/button")).click();
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[155]/div[1]/button")).click();
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[185]/div[1]/button")).click();
-        //driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[245]/div[1]/button")).click();
-        String url = driver.getCurrentUrl();*/
-
-        //driver.close();
     }
 
     private void getToTheBeers() throws Exception{
@@ -132,10 +67,6 @@ public class Main {
         driver.findElement(By.xpath("/html/body/div[5]/div/div/div/div/div/form/label/div/input")).sendKeys("p");
         TimeUnit.MILLISECONDS.sleep(800);
         driver.findElement(By.xpath("/html/body/div[5]/div/div/div/div/div/form/label/div/div/div/ul/li/div")).click();
-        //TimeUnit.MILLISECONDS.sleep(800);
-        //driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[3]/div[1]/select")).click();
-
-
 
         //TODO code to click "Visa fler"
         int antalSidor = 4;
@@ -152,8 +83,8 @@ public class Main {
             driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[" + (32 + i*31) + "]/div[1]/button")).click();
 
         }
-        /*
-        for(int i = 0; i < 5; i++){
+
+        for(int i = 0; i < 8; i++){
             for(int j = 155-30 + i*30; j < 155 + i*30; j++){
                 try {
                     links.add(driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[" + j + "]/div/a")).getAttribute("href"));
@@ -164,41 +95,20 @@ public class Main {
                 TimeUnit.MILLISECONDS.sleep(100);
             }
             driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[" + (155 + i*30) + "]/div[1]/button")).click();
-        }*/
-
-        /*
-        TimeUnit.MILLISECONDS.sleep(1000);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[155]/div[1]/button")).click();
-        TimeUnit.MILLISECONDS.sleep(1000);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[185]/div[1]/button")).click();
-        TimeUnit.MILLISECONDS.sleep(1000);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[215]/div[1]/button")).click();
-        TimeUnit.MILLISECONDS.sleep(1000);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[245]/div[1]/button")).click();
-        TimeUnit.MILLISECONDS.sleep(1000);
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[275]/div[1]/button")).click();
-        */
-
-        /*
-        //Add all links to the beers in the internal link list
-        for(int i = 1; i < 50; i++){
-            try {
-                links.add(driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[" + i + "]/div/a")).getAttribute("href"));
-            }
-            catch (Exception e){
-                System.out.println("Link not found");
-            }
-            TimeUnit.MILLISECONDS.sleep(100);
-        }*/
+        }
     }
 
     private void getBeers(){
+        String temp;
 
         int progress = 0;
         for(String link : links){
             try {
                 driver.get(link);
-                beers.add(new Beer(driver));
+                temp = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[1]/div/div[2]/div[2]/div[6]/div[1]/div[2]/div/div/div[2]/div[1]/div")).getText();
+                if (Integer.parseInt(temp.split(" ")[0]) > 0){
+                    beers.add(new Beer(driver));
+                }
                 progress++;
             }
             catch (Exception e){
@@ -269,8 +179,8 @@ public class Main {
                     ", price=" + price +
                     ", apk=" + apk +
                     ", percent=" + percent +
-                    ", imgLink=" + imgLink +
                     ", lager status=" + lager +
+                    ", imgLink=" + imgLink +
                     '}';
         }
 
