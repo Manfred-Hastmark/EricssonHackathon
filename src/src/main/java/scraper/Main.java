@@ -35,34 +35,15 @@ public class Main {
     List<Beer> beers;
 
     public Main() throws Exception{
-<<<<<<< HEAD
-
-        long time = System.currentTimeMillis();
-
-        System.setProperty("webdriver.gecko.driver","C:/Program Files/geckodriver.exe");
-=======
         long time = System.currentTimeMillis();
 
         System.setProperty("webdriver.gecko.driver","C:/Skola/geckodriver.exe");
->>>>>>> 722cb1c89b6ee5e4002256e06d572bc8d157ec3a
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("marionette",true);
         FirefoxBinary firefoxBinary = new FirefoxBinary();
         FirefoxOptions options = new FirefoxOptions();
         options.setBinary(firefoxBinary);
         //options.setHeadless(true);  // <-- headless set here
-<<<<<<< HEAD
-        WebDriver driver = new FirefoxDriver(options);
-        driver.get("https://www.systembolaget.se/sok/?categoryLevel1=%C3%96l");
-        driver.findElement(By.xpath("/html/body/div[4]/div/div/div/div/section/div/div/div[4]/button")).click();
-        driver.findElement(By.xpath("/html/body/div[4]/div/div/div/div/div/div[2]/div[2]/button[2]")).click();
-        driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[1]/div/button[2]")).click();
-        driver.findElement(By.xpath("/html/body/div[5]/div/div/div/div/div/form/label/div/input")).sendKeys("Kapell");
-        TimeUnit.MILLISECONDS.sleep(200);
-        driver.findElement(By.xpath("/html/body/div[5]/div/div/div/div/div/form/label/div/input")).sendKeys("p");
-        TimeUnit.MILLISECONDS.sleep(800);
-        driver.findElement(By.xpath("/html/body/div[5]/div/div/div/div/div/form/label/div/div/div/ul/li/div")).click();
-=======
         this.driver = new FirefoxDriver(options);
         this.links = new ArrayList<>();
         this.beers = new ArrayList<>();
@@ -72,18 +53,11 @@ public class Main {
         beers.forEach(b -> System.out.println(b.toString()));
         System.out.println(beers.size());
 
->>>>>>> 722cb1c89b6ee5e4002256e06d572bc8d157ec3a
         /*
         TimeUnit.MILLISECONDS.sleep(500);
         String volume = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[1]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[1]")).getText();
         System.out.println(volume);*/
-<<<<<<< HEAD
-
-        List<Beer> beers = new ArrayList<>();
-
-=======
         /*
->>>>>>> 722cb1c89b6ee5e4002256e06d572bc8d157ec3a
         TimeUnit.MILLISECONDS.sleep(500);
         driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[1]/div/a/div/div/div[3]/div[1]/div[1]/div[1]/div/h3/span[1]")).click();
         beers.add(new Beer(driver));
@@ -114,15 +88,10 @@ public class Main {
             System.out.println(b.toString());
         }
 
-<<<<<<< HEAD
-        System.out.println(System.currentTimeMillis() - time);
-
-=======
         beers.forEach(b -> System.out.println(b.toString()));
 
         System.out.println(System.currentTimeMillis() - time);
         */
->>>>>>> 722cb1c89b6ee5e4002256e06d572bc8d157ec3a
         /*
         int antalSidor = 4;
         for(int i = 0; i < antalSidor; i++){
@@ -165,6 +134,7 @@ public class Main {
         driver.findElement(By.xpath("/html/body/div[5]/div/div/div/div/div/form/label/div/div/div/ul/li/div")).click();
         //TimeUnit.MILLISECONDS.sleep(800);
         //driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[3]/div[1]/select")).click();
+
 
 
         //TODO code to click "Visa fler"
@@ -228,11 +198,11 @@ public class Main {
         for(String link : links){
             try {
                 driver.get(link);
-                beers.add(new Beer(driver, link));
+                beers.add(new Beer(driver));
                 progress++;
             }
             catch (Exception e){
-                System.out.println("Beer not found");
+                //System.out.println("Beer not found");
             }
             System.out.println(progress);
         }
@@ -259,23 +229,15 @@ public class Main {
         final private double price;
         final private double apk;
         final private double percent;
-<<<<<<< HEAD
-
-        public Beer(String name, int volume, int price, double percent) {
-=======
         final private String imgLink;
         final private String systemetLink;
-        final private String lager;
+        final private int lager;
 
-        public Beer(String name, int volume, int price, double percent, String imgLink, String systemetLink, String lager) {
->>>>>>> 722cb1c89b6ee5e4002256e06d572bc8d157ec3a
+        public Beer(String name, int volume, int price, double percent, String imgLink, String systemetLink, int lager) {
             this.name = name;
             this.volume = volume;
             this.price = price;
             this.percent = percent;
-<<<<<<< HEAD
-            this.apk = price;
-=======
             this.apk = (this.percent * 0.01 * this.volume) / this.price;
             this.imgLink = imgLink;
             this.systemetLink = systemetLink;
@@ -293,8 +255,10 @@ public class Main {
             this.percent = Double.parseDouble(temp.split(" ")[0].replace(",", "."));
             this.apk = (this.percent * 0.01 * this.volume) / this.price;
             this.imgLink = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[1]/div/div[2]/div[1]/button/div/img")).getAttribute("src");
+            temp = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[1]/div/div[2]/div[2]/div[6]/div[1]/div[2]/div/div/div[2]/div[1]/div")).getText();
+            this.lager = Integer.parseInt(temp.split(" ")[0]);
             this.systemetLink = driver.getCurrentUrl();
-            this.lager = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[1]/div/div[2]/div[1]/button/div/img")).getAttribute("src");
+
         }
 
         @Override
@@ -306,28 +270,7 @@ public class Main {
                     ", apk=" + apk +
                     ", percent=" + percent +
                     ", imgLink=" + imgLink +
-                    '}';
->>>>>>> 722cb1c89b6ee5e4002256e06d572bc8d157ec3a
-        }
-
-        public Beer(WebDriver driver){
-            this.name = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/main/div[1]/div/div[2]/div[2]/div[1]/div[1]/div[2]/h1/span")).getText();
-            String temp = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/main/div[1]/div/div[2]/div[2]/div[3]/div[1]/div/div[2]/span")).getText();
-            this.volume = Integer.parseInt(temp.split(" ")[0]);
-            this.price = Double.parseDouble(driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/main/div[1]/div/div[2]/div[2]/div[3]/div[2]/div[1]")).getText().replace(":", "."));
-            temp = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/main/div[1]/div/div[2]/div[2]/div[3]/div[1]/div/div[3]/span")).getText();
-            this.percent = Double.parseDouble(temp.split(" ")[0].replace(",", "."));
-            this.apk = (this.percent * 0.01 * this.volume) / this.price;
-        }
-
-        @Override
-        public String toString() {
-            return "Beer{" +
-                    "name='" + name + '\'' +
-                    ", volume=" + volume +
-                    ", price=" + price +
-                    ", apk=" + apk +
-                    ", percent=" + percent +
+                    ", lager status=" + lager +
                     '}';
         }
 
