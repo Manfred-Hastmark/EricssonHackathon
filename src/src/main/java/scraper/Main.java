@@ -36,7 +36,6 @@ public class Main {
 
     public Main() throws Exception{
         long time = System.currentTimeMillis();
-        //generateHTML();
 
         System.setProperty("webdriver.gecko.driver","C:/Program Files/geckodriver.exe");
 
@@ -46,7 +45,7 @@ public class Main {
         FirefoxBinary firefoxBinary = new FirefoxBinary();
         FirefoxOptions options = new FirefoxOptions();
         options.setBinary(firefoxBinary);
-        options.setHeadless(true);  // <-- headless set here
+        //options.setHeadless(true);  // <-- headless set here
         this.driver = new FirefoxDriver(options);
         this.links = new ArrayList<>();
         this.beers = new ArrayList<>();
@@ -55,6 +54,7 @@ public class Main {
         driver.close();
         sort(beers, 0, beers.size()-1);
         beers.forEach(b -> System.out.println(b.toString()));
+        generateHTML();
 
     }
 
@@ -70,7 +70,8 @@ public class Main {
         TimeUnit.MILLISECONDS.sleep(800);
         driver.findElement(By.xpath("/html/body/div[5]/div/div/div/div/div/form/label/div/div/div/ul/li/div")).click();
 
-        //TODO code to click "Visa fler"
+        TimeUnit.MILLISECONDS.sleep(800);
+
         int antalSidor = 4;
         for(int i = 0; i < antalSidor; i++){
             for(int j = i*31; j < 32 + i*31; j++){
@@ -85,20 +86,8 @@ public class Main {
             driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[" + (32 + i*31) + "]/div[1]/button")).click();
 
         }
-    }
 
-    //Function for generating the html site
-    private void generateHTML(String htmlpage) {
-        try {
-            FileWriter index = new FileWriter("index.html");
-            index.write(htmlpage);
-            index.close();
-            System.out.println("Done generating html");
-        } catch (Exception e) {
-            System.out.println("Failed to generate file");
-=======
-
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < 20; i++){
             for(int j = 155-30 + i*30; j < 155 + i*30; j++){
                 try {
                     links.add(driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[" + j + "]/div/a")).getAttribute("href"));
@@ -108,8 +97,84 @@ public class Main {
                 }
                 TimeUnit.MILLISECONDS.sleep(100);
             }
-            driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[" + (155 + i*30) + "]/div[1]/button")).click();
->>>>>>> 0b63f61fd27efae4c6158959c02efba1194c7446
+            try {
+                driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[" + (155 + i*30) + "]/div[1]/button")).click();
+            } catch (Exception e){
+                break;
+            }
+        }
+    }
+
+    //Function for generating the html site
+    private void generateHTML() {
+        try {
+            FileWriter index = new FileWriter("index.html");
+            int random = new Random().nextInt(beers.size() - 10) + 10;
+            Beer randomBeer = beers.get(random);
+            index.write("<html>\n" +
+                    "<head>\n" +
+                    "    <link rel=\"stylesheet\" href=\"styles.css\">\n" +
+                    "    <link rel=\"stylesheet\"\n" +
+                    "          href=\"https://fonts.googleapis.com/css?family=Arapey\">\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "</head>\n" +
+                    "\n" +
+                    "\n" +
+                    "<body>\n" +
+                    "\n" +
+                    "\n" +
+                    "\n" +
+                    "\n" +
+                    "\n" +
+                    "<div class=\"page\">\n" +
+                    "    <h1>Øhl med högst APK på Systembolaget Landala</h1>\n" +
+                    "\n" +
+                    "\n" +
+                    "\n" +
+                    "    <div class=\"fill dagens\">\n" +
+                    "        <a href=\"" + randomBeer.systemetLink + "\">\n" +
+                    "            <h2>Dagens Øhl </h2>\n" +
+                    "            <img class=\"ol\" src=\"" + randomBeer.imgLink + "\">\n" +
+                    "            <div class=\"info\">\n" +
+                    "                <p class=\"name\">" + randomBeer.name + "</p>\n" +
+                    "                <p class=\"Volym\">Volym: " + randomBeer.volume +  " ml</p>\n" +
+                    "                <p class=\"Pris\">Pris: " + Double.toString(randomBeer.price).replace(".", ":") + "0 kr</p>\n" +
+                    "                <p class=\"halt\">Alkoholhalt: " + randomBeer.percent + "%</p>\n" +
+                    "                <p class=\"apk\">APK: " + ((double)(int)(randomBeer.apk * 100))/100 + "</p>\n" +
+                    "                <p class=\"Lager\">Kvar i lager: " + randomBeer.lager + " st</p>\n" +
+                    "            </div>\n" +
+                    "        </a>\n" +
+                    "    </div>\n");
+
+
+
+
+            for(int i = 0; i < 10; i++) {
+                index.write("    <a href=\"" + beers.get(i).systemetLink + "\">\n" +
+                        "        <div class=\"fill\">\n" +
+                        "            <img class=\"ol\" src=\"" + beers.get(i).imgLink + "\">\n" +
+                        "            <div class=\"info\">\n" +
+                        "                <p class=\"name\">" + beers.get(i).name + "</p>\n" +
+                        "                <p class=\"Volym\">Volym: " + beers.get(i).volume +  " ml</p>\n" +
+                        "                <p class=\"Pris\">Pris: " + Double.toString(beers.get(i).price).replace(".", ":") + "0 kr</p>\n" +
+                        "                <p class=\"halt\">Alkoholhalt: " + beers.get(i).percent + "%</p>\n" +
+                        "                <p class=\"apk\">APK: " + ((double)(int)(beers.get(i).apk * 100))/100 + "</p>\n" +
+                        "                <p class=\"Lager\">Kvar i lager: " + beers.get(i).lager + " st</p>\n" +
+                        "            </div>\n" +
+                        "        </div>\n" +
+                        "    </a>\n");
+            }
+
+            index.write("</div>\n" +
+                            "\n" +
+                            "</body>\n" +
+                            "\n" +
+                            "\n" +
+                            "</html>");
+            index.close();
+            System.out.println("Done generating html");
+        } catch (Exception e) {
+            System.out.println("Failed to generate file");
         }
     }
 
