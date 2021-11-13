@@ -239,6 +239,7 @@ public class Main {
             this.apk = (this.percent * 0.01 * this.volume) / this.price;
             this.imgLink = imgLink;
             this.systemetLink = systemetLink;
+
         }
 
         public Beer(WebDriver driver, String systemetLink){
@@ -251,7 +252,8 @@ public class Main {
             this.percent = Double.parseDouble(temp.split(" ")[0].replace(",", "."));
             this.apk = (this.percent * 0.01 * this.volume) / this.price;
             this.imgLink = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[1]/div/div[2]/div[1]/button/div/img")).getAttribute("src");
-            this.systemetLink = systemetLink;
+            this.systemetLink = driver.getCurrentUrl();
+
         }
 
         @Override
