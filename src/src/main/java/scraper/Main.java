@@ -230,8 +230,9 @@ public class Main {
         final private double percent;
         final private String imgLink;
         final private String systemetLink;
+        final private String lager;
 
-        public Beer(String name, int volume, int price, double percent, String imgLink, String systemetLink) {
+        public Beer(String name, int volume, int price, double percent, String imgLink, String systemetLink, String lager) {
             this.name = name;
             this.volume = volume;
             this.price = price;
@@ -239,10 +240,11 @@ public class Main {
             this.apk = (this.percent * 0.01 * this.volume) / this.price;
             this.imgLink = imgLink;
             this.systemetLink = systemetLink;
+            this.lager = lager;
 
         }
 
-        public Beer(WebDriver driver, String systemetLink){
+        public Beer(WebDriver driver){
             this.name = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/main/div[1]/div/div[2]/div[2]/div[1]/div[1]/div[2]/h1/span")).getText();
             String temp = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/main/div[1]/div/div[2]/div[2]/div[3]/div[1]/div/div[2]/span")).getText();
             this.volume = Integer.parseInt(temp.split(" ")[0]);
@@ -253,7 +255,7 @@ public class Main {
             this.apk = (this.percent * 0.01 * this.volume) / this.price;
             this.imgLink = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[1]/div/div[2]/div[1]/button/div/img")).getAttribute("src");
             this.systemetLink = driver.getCurrentUrl();
-
+            this.lager = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[1]/div/div[2]/div[1]/button/div/img")).getAttribute("src");
         }
 
         @Override
