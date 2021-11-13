@@ -52,9 +52,10 @@ public class Main {
         this.beers = new ArrayList<>();
         getToTheBeers();
         getBeers();
+        driver.close();
         sort(beers, 0, beers.size()-1);
         beers.forEach(b -> System.out.println(b.toString()));
-        System.out.println(beers.size());
+
     }
 
     private void getToTheBeers() throws Exception{
@@ -68,8 +69,6 @@ public class Main {
         driver.findElement(By.xpath("/html/body/div[5]/div/div/div/div/div/form/label/div/input")).sendKeys("p");
         TimeUnit.MILLISECONDS.sleep(800);
         driver.findElement(By.xpath("/html/body/div[5]/div/div/div/div/div/form/label/div/div/div/ul/li/div")).click();
-
-
 
         //TODO code to click "Visa fler"
         int antalSidor = 4;
@@ -97,16 +96,34 @@ public class Main {
             System.out.println("Done generating html");
         } catch (Exception e) {
             System.out.println("Failed to generate file");
+=======
+
+        for(int i = 0; i < 8; i++){
+            for(int j = 155-30 + i*30; j < 155 + i*30; j++){
+                try {
+                    links.add(driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[" + j + "]/div/a")).getAttribute("href"));
+                }
+                catch (Exception e){
+                    System.out.println("Link not found");
+                }
+                TimeUnit.MILLISECONDS.sleep(100);
+            }
+            driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[4]/div[" + (155 + i*30) + "]/div[1]/button")).click();
+>>>>>>> 0b63f61fd27efae4c6158959c02efba1194c7446
         }
     }
 
     private void getBeers(){
+        String temp;
 
         int progress = 0;
         for(String link : links){
             try {
                 driver.get(link);
-                beers.add(new Beer(driver));
+                temp = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[1]/div/div[2]/div[2]/div[6]/div[1]/div[2]/div/div/div[2]/div[1]/div")).getText();
+                if (Integer.parseInt(temp.split(" ")[0]) > 0){
+                    beers.add(new Beer(driver));
+                }
                 progress++;
             }
             catch (Exception e){
@@ -177,8 +194,8 @@ public class Main {
                     ", price=" + price +
                     ", apk=" + apk +
                     ", percent=" + percent +
-                    ", imgLink=" + imgLink +
                     ", lager status=" + lager +
+                    ", imgLink=" + imgLink +
                     '}';
         }
 
