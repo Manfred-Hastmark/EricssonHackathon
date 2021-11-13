@@ -136,6 +136,7 @@ public class Main {
         //driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[2]/div/div/div/div[2]/div[3]/div[1]/select")).click();
 
 
+
         //TODO code to click "Visa fler"
         int antalSidor = 4;
         for(int i = 0; i < antalSidor; i++){
@@ -197,11 +198,11 @@ public class Main {
         for(String link : links){
             try {
                 driver.get(link);
-                beers.add(new Beer(driver, link));
+                beers.add(new Beer(driver));
                 progress++;
             }
             catch (Exception e){
-                System.out.println("Beer not found");
+                //System.out.println("Beer not found");
             }
             System.out.println(progress);
         }
@@ -230,9 +231,9 @@ public class Main {
         final private double percent;
         final private String imgLink;
         final private String systemetLink;
-        final private String lager;
+        final private int lager;
 
-        public Beer(String name, int volume, int price, double percent, String imgLink, String systemetLink, String lager) {
+        public Beer(String name, int volume, int price, double percent, String imgLink, String systemetLink, int lager) {
             this.name = name;
             this.volume = volume;
             this.price = price;
@@ -254,8 +255,10 @@ public class Main {
             this.percent = Double.parseDouble(temp.split(" ")[0].replace(",", "."));
             this.apk = (this.percent * 0.01 * this.volume) / this.price;
             this.imgLink = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[1]/div/div[2]/div[1]/button/div/img")).getAttribute("src");
+            temp = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[1]/div/div[2]/div[2]/div[6]/div[1]/div[2]/div/div/div[2]/div[1]/div")).getText();
+            this.lager = Integer.parseInt(temp.split(" ")[0]);
             this.systemetLink = driver.getCurrentUrl();
-            this.lager = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[1]/div/div[2]/div[1]/button/div/img")).getAttribute("src");
+
         }
 
         @Override
@@ -267,6 +270,7 @@ public class Main {
                     ", apk=" + apk +
                     ", percent=" + percent +
                     ", imgLink=" + imgLink +
+                    ", lager status=" + lager +
                     '}';
         }
 
