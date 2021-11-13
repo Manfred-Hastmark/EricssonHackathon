@@ -165,7 +165,7 @@ public class Main {
     private void getBeers(){
         for(String link : links){
             driver.get(link);
-            beers.add(new Beer(driver));
+            beers.add(new Beer(driver, link));
         }
         beers.forEach(b -> System.out.println(b.toString()));
     }
@@ -177,17 +177,19 @@ public class Main {
         final private double apk;
         final private double percent;
         final private String imgLink;
+        final private String systemetLink;
 
-        public Beer(String name, int volume, int price, double percent, String imgLink) {
+        public Beer(String name, int volume, int price, double percent, String imgLink, String systemetLink) {
             this.name = name;
             this.volume = volume;
             this.price = price;
             this.percent = percent;
             this.apk = (this.percent * 0.01 * this.volume) / this.price;
             this.imgLink = imgLink;
+            this.systemetLink = systemetLink;
         }
 
-        public Beer(WebDriver driver){
+        public Beer(WebDriver driver, String systemetLink){
             this.name = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/main/div[1]/div/div[2]/div[2]/div[1]/div[1]/div[2]/h1/span")).getText();
             String temp = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[2]/main/div[1]/div/div[2]/div[2]/div[3]/div[1]/div/div[2]/span")).getText();
             this.volume = Integer.parseInt(temp.split(" ")[0]);
@@ -197,6 +199,7 @@ public class Main {
             this.percent = Double.parseDouble(temp.split(" ")[0].replace(",", "."));
             this.apk = (this.percent * 0.01 * this.volume) / this.price;
             this.imgLink = driver.findElement(By.xpath("/html/body/div[1]/div[2]/main/div[1]/div/div[2]/div[1]/button/div/img")).getAttribute("src");
+            this.systemetLink = systemetLink;
         }
 
         @Override
