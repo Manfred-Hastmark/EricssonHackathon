@@ -8,7 +8,7 @@ body {
     
     display:grid;
     grid-template-columns: auto auto;
-
+	margin:auto;
 	width: 600px;
 	height: 1100px;
     border-style: solid;
