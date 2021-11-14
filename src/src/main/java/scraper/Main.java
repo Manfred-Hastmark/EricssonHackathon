@@ -1,32 +1,16 @@
 package scraper;
 
-import com.google.common.net.PercentEscaper;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
+
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import scraper.Book;
-import org.apache.commons.io.FileUtils;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.swing.text.html.Option;
-import java.io.*;
-import java.net.*;
-import java.net.http.HttpClient;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeUnit;
 
-
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
@@ -35,11 +19,9 @@ public class Main {
     List<Beer> beers;
 
     public Main() throws Exception{
-        long time = System.currentTimeMillis();
+
 
         System.setProperty("webdriver.gecko.driver","C:/Program Files/geckodriver.exe");
-
-
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("marionette",true);
         FirefoxBinary firefoxBinary = new FirefoxBinary();
@@ -288,57 +270,5 @@ public class Main {
     public static void main(String[] args) throws Exception {
         new Main();
     }
-
-    public static void getLunch(URL url){
-        try {
-            URLConnection connection = url.openConnection();
-            connection.connect();
-
-        } catch (Exception e){
-            System.out.println(e);
-        }
-    }
-
-    public static Book getBookBySearch(String search) {
-        try {
-            //Setup connection to site
-            search = search.replace(" ", "%20");
-            search = search.replace("ä", "%C3%A4");
-
-
-
-            URL url = new URL("https://www.chalmersstore.se/sok/" + search);
-            File file = new File("temp.txt");
-            FileUtils.copyURLToFile(url, file);
-            URLConnection connection = url.openConnection();
-
-            //Get page as stringbuilder
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String inputLine;
-            StringBuilder page = new StringBuilder();
-            while ((inputLine = in.readLine()) != null)
-                page.append(inputLine);
-            in.close();
-
-
-
-        } catch (Exception e){
-            System.out.println(e);
-        }
-
-
-
-        /*
-        int index = page.indexOf(pattern) + pattern.length();
-        StringBuilder result = new StringBuilder();
-        while (44 < page.charAt(index) && page.charAt(index) < 58 && page.charAt(index) != 47) { //Number 0-9
-            result.append(page.charAt(index));
-            index++;
-        }
-        return Double.parseDouble(result.toString().replace(",", "."));*/
-        return null;
-    }
-
-
 
 }
