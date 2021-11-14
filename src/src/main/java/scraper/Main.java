@@ -19,8 +19,6 @@ public class Main {
     List<Beer> beers;
 
     public Main() throws Exception{
-
-
         System.setProperty("webdriver.gecko.driver","C:/Program Files/geckodriver.exe");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("marionette",true);
@@ -37,7 +35,6 @@ public class Main {
         sort(beers, 0, beers.size()-1);
         beers.forEach(b -> System.out.println(b.toString()));
         generateHTML();
-
     }
 
     private void getToTheBeers() throws Exception{
